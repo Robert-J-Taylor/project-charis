@@ -251,9 +251,18 @@ export async function POST(request: NextRequest) {
         ok: true,
         message: 'Form submitted successfully',
       });
-    } catch (emailError) {
+    } catch (emailError: unknown) {
       console.error('Email sending error:', emailError);
-      console.error('SendGrid response:', emailError.response?.body);
+
+      // Type guard for SendGrid error response
+      if (
+        emailError &&
+        typeof emailError === 'object' &&
+        'response' in emailError
+      ) {
+        const error = emailError as { response?: { body?: unknown } };
+        console.error('SendGrid response:', error.response?.body);
+      }
       return NextResponse.json(
         {
           ok: false,

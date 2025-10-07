@@ -9,13 +9,21 @@ interface ContactEmailProps {
 
 // This function is no longer used since we're using the HTML template in route.ts
 // Keeping this file for the plain text version only
-export function ContactEmail({ data, timestamp, ipAddress }: ContactEmailProps) {
+export function ContactEmail({
+  data,
+  timestamp,
+  ipAddress,
+}: ContactEmailProps) {
   // This is a placeholder - the actual HTML email is generated in route.ts
   return null;
 }
 
 // Plain text version for email clients that don't support HTML
-export function ContactEmailText({ data, timestamp, ipAddress }: ContactEmailProps) {
+export function ContactEmailText({
+  data,
+  timestamp,
+  ipAddress,
+}: ContactEmailProps) {
   const {
     name,
     email,
@@ -26,7 +34,7 @@ export function ContactEmailText({ data, timestamp, ipAddress }: ContactEmailPro
     helpText,
     extra,
     updatesOptIn,
-    scheduleCall
+    scheduleCall,
   } = data;
 
   return `
@@ -38,7 +46,7 @@ Email: ${email}
 ${organization ? `Organization: ${organization}` : ''}
 
 INVOLVEMENT:
-${involvement.map(item => `- ${item}`).join('\n')}
+${involvement.map((item) => `- ${item}`).join('\n')}
 
 CHALLENGE:
 ${challenge}

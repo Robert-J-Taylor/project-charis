@@ -79,9 +79,9 @@ export async function POST(request: NextRequest) {
     const rateLimit = checkRateLimit(ip);
     if (!rateLimit.allowed) {
       return NextResponse.json(
-        { 
-          ok: false, 
-          message: 'Too many requests. Please try again later.' 
+        {
+          ok: false,
+          message: 'Too many requests. Please try again later.',
         },
         { status: 429 }
       );
@@ -93,9 +93,9 @@ export async function POST(request: NextRequest) {
     // Basic validation
     if (!email || typeof email !== 'string') {
       return NextResponse.json(
-        { 
-          ok: false, 
-          message: 'Email is required' 
+        {
+          ok: false,
+          message: 'Email is required',
         },
         { status: 400 }
       );
@@ -105,9 +105,9 @@ export async function POST(request: NextRequest) {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
-        { 
-          ok: false, 
-          message: 'Invalid email format' 
+        {
+          ok: false,
+          message: 'Invalid email format',
         },
         { status: 400 }
       );
@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-      second: '2-digit'
+      second: '2-digit',
     });
 
     // Send email via SendGrid
@@ -129,7 +129,7 @@ export async function POST(request: NextRequest) {
         to: process.env.CONTACT_TO || 'theprojectcharis@gmail.com',
         from: {
           email: process.env.CONTACT_FROM || 'noreply@projectcharis.org',
-          name: 'Project Charis'
+          name: 'Project Charis',
         },
         subject: `New Waitlist Signup - ${email}`,
         html: generateWaitlistEmailHTML(email, timestamp),
@@ -142,31 +142,29 @@ export async function POST(request: NextRequest) {
       console.log('Waitlist signup:', {
         timestamp: new Date().toISOString(),
         email: email,
-        messageId: 'waitlist-signup'
+        messageId: 'waitlist-signup',
       });
 
-      return NextResponse.json({ 
+      return NextResponse.json({
         ok: true,
-        message: 'Successfully joined waitlist' 
+        message: 'Successfully joined waitlist',
       });
-
     } catch (emailError: any) {
       console.error('Waitlist email error:', emailError);
       return NextResponse.json(
-        { 
-          ok: false, 
-          message: 'Failed to process signup. Please try again later.' 
+        {
+          ok: false,
+          message: 'Failed to process signup. Please try again later.',
         },
         { status: 500 }
       );
     }
-
   } catch (error) {
     console.error('Waitlist API error:', error);
     return NextResponse.json(
-      { 
-        ok: false, 
-        message: 'Internal server error' 
+      {
+        ok: false,
+        message: 'Internal server error',
       },
       { status: 500 }
     );

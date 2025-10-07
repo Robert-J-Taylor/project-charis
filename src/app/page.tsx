@@ -23,7 +23,6 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
-
       {/* Main Content */}
       <main className="container mx-auto px-4 py-12">
         {/* Mission Statement */}
@@ -73,11 +72,11 @@ export default function Home() {
               <div className="p-6 rounded-lg border border-accent/10 bg-accent/3">
                 <p className="text-lg md:text-xl text-accent font-medium leading-relaxed">
                   Through modern technology, advanced AI tools, and a community
-                  built on goodwill, Project Charis turns compassion into connection so every act of kindness makes an impact.
+                  built on goodwill, Project Charis turns compassion into
+                  connection so every act of kindness makes an impact.
                 </p>
               </div>
             </div>
-
           </div>
         </section>
 
@@ -333,7 +332,6 @@ export default function Home() {
             </Card>
           </div>
         </section>
-
       </main>
 
       {/* Waitlist Section */}

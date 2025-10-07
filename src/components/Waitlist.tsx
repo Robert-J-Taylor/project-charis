@@ -9,7 +9,7 @@ const WAITLIST_CONTENT = {
   inputPlaceholder: 'you@organization.org',
   buttonText: 'Join Waitlist',
   microCopy: 'We send occasional updates. No spam.',
-  successMessage: '🎉 You\'re on the list. We\'ll be in touch soon.',
+  successMessage: "🎉 You're on the list. We'll be in touch soon.",
   errorMessage: 'Something went wrong. Please try again.',
 };
 
@@ -25,7 +25,7 @@ export default function Waitlist() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email.trim()) return;
     if (!validateEmail(email)) return;
 
@@ -63,14 +63,14 @@ export default function Waitlist() {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full border border-[#D5E1EC]/20 -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full border border-[#E2EBF3]/15 translate-x-1/2 translate-y-1/2"></div>
       <div className="absolute top-1/2 right-1/3 w-32 h-32 rounded-full border border-[#D5E1EC]/25 translate-x-1/2 -translate-y-1/2"></div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-2xl mx-auto text-center">
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl font-heading text-[#223A5E] mb-4">
             {WAITLIST_CONTENT.heading}
           </h2>
-          
+
           {/* Subtext */}
           <p className="text-lg md:text-xl font-body text-[#718B9E] mb-12">
             {WAITLIST_CONTENT.subtext}
@@ -96,7 +96,7 @@ export default function Waitlist() {
                   disabled={isSubmitting}
                 />
               </div>
-              
+
               {/* Submit Button */}
               <Button
                 type="submit"
@@ -134,4 +134,3 @@ export default function Waitlist() {
     </section>
   );
 }
-

@@ -11,7 +11,11 @@ if (process.env.SENDGRID_API_KEY) {
 }
 
 // Simple HTML email template function
-function generateContactEmailHTML(data: ContactFormData, timestamp: string, ipAddress: string): string {
+function generateContactEmailHTML(
+  data: ContactFormData,
+  timestamp: string,
+  ipAddress: string
+): string {
   const {
     name,
     email,
@@ -22,7 +26,7 @@ function generateContactEmailHTML(data: ContactFormData, timestamp: string, ipAd
     helpText,
     extra,
     updatesOptIn,
-    scheduleCall
+    scheduleCall,
   } = data;
 
   return `
@@ -58,11 +62,15 @@ function generateContactEmailHTML(data: ContactFormData, timestamp: string, ipAd
         <p style="margin: 5px 0; color: #333333; font-size: 16px;">
           <strong>Email:</strong> <a href="mailto:${email}" style="color: #223A5E;">${email}</a>
         </p>
-        ${organization ? `
+        ${
+          organization
+            ? `
         <p style="margin: 5px 0; color: #333333; font-size: 16px;">
           <strong>Organization:</strong> ${organization}
         </p>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
 
       <!-- Involvement Section -->
@@ -70,9 +78,13 @@ function generateContactEmailHTML(data: ContactFormData, timestamp: string, ipAd
         <h2 style="color: #223A5E; font-size: 20px; margin: 0 0 15px 0; border-bottom: 2px solid #E4C9A1; padding-bottom: 8px;">
           How they want to get involved
         </h2>
-        ${involvement.map(item => `
+        ${involvement
+          .map(
+            (item) => `
         <p style="margin: 5px 0; color: #333333; font-size: 16px;">• ${item}</p>
-        `).join('')}
+        `
+          )
+          .join('')}
       </div>
 
       <!-- Challenge Section -->
@@ -83,11 +95,15 @@ function generateContactEmailHTML(data: ContactFormData, timestamp: string, ipAd
         <p style="margin: 5px 0; color: #333333; font-size: 16px;">
           <strong>${challenge}</strong>
         </p>
-        ${challenge === 'Other' && otherChallenge ? `
+        ${
+          challenge === 'Other' && otherChallenge
+            ? `
         <p style="margin: 10px 0 5px 0; color: #333333; font-size: 16px; font-style: italic; background-color: #f8f9fa; padding: 10px; border-radius: 4px;">
           <strong>Details:</strong> ${otherChallenge}
         </p>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
 
       <!-- Help Section -->
@@ -102,7 +118,9 @@ function generateContactEmailHTML(data: ContactFormData, timestamp: string, ipAd
         </div>
       </div>
 
-      ${extra ? `
+      ${
+        extra
+          ? `
       <!-- Additional Information -->
       <div style="margin-bottom: 25px;">
         <h2 style="color: #223A5E; font-size: 20px; margin: 0 0 15px 0; border-bottom: 2px solid #E4C9A1; padding-bottom: 8px;">
@@ -114,7 +132,9 @@ function generateContactEmailHTML(data: ContactFormData, timestamp: string, ipAd
           </p>
         </div>
       </div>
-      ` : ''}
+      `
+          : ''
+      }
 
       <!-- Preferences -->
       <div style="margin-bottom: 25px;">
@@ -156,26 +176,26 @@ export async function POST(request: NextRequest) {
     const rateLimit = checkRateLimit(ip);
     if (!rateLimit.allowed) {
       return NextResponse.json(
-        { 
-          ok: false, 
-          message: 'Too many submissions. Please try again soon.' 
+        {
+          ok: false,
+          message: 'Too many submissions. Please try again soon.',
         },
         { status: 429 }
       );
     }
 
     const body = await request.json();
-    
+
     // Debug: Log the incoming data
     console.log('Incoming form data:', JSON.stringify(body, null, 2));
-    
+
     // Validate form data
     const validation = validateContactForm(body);
     if (!validation.success) {
       return NextResponse.json(
-        { 
-          ok: false, 
-          errors: validation.errors 
+        {
+          ok: false,
+          errors: validation.errors,
         },
         { status: 400 }
       );
@@ -190,66 +210,64 @@ export async function POST(request: NextRequest) {
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-      second: '2-digit'
+      second: '2-digit',
     });
 
-        // Send email via SendGrid
-        try {
-          // Debug: Log SendGrid configuration
-          console.log('SendGrid config:', {
-            hasApiKey: !!process.env.SENDGRID_API_KEY,
-            apiKeyLength: process.env.SENDGRID_API_KEY?.length,
-            from: process.env.CONTACT_FROM || 'theprojectcharis@gmail.com',
-            to: process.env.CONTACT_TO || 'theprojectcharis@gmail.com'
-          });
-
-          const msg = {
-            to: process.env.CONTACT_TO || 'theprojectcharis@gmail.com',
-            from: {
-              email: process.env.CONTACT_FROM || 'noreply@projectcharis.org',
-              name: 'Project Charis'
-            },
-            subject: `New Contact — Project Charis (${data.name})`,
-            html: generateContactEmailHTML(data, timestamp, ip),
-            text: ContactEmailText({ data, timestamp, ipAddress: ip }),
-          };
-
-          const info = await sgMail.send(msg);
-
-          // Log minimal metadata (not full payload in production)
-          console.log('Contact form submitted:', {
-            timestamp: new Date().toISOString(),
-            name: data.name,
-            email: data.email,
-            organization: data.organization || 'Not provided',
-            involvementCount: data.involvement.length,
-            challenge: data.challenge,
-            messageId: info[0]?.headers?.['x-message-id'] || 'sent'
-          });
-
-      return NextResponse.json({ 
-        ok: true,
-        message: 'Form submitted successfully' 
+    // Send email via SendGrid
+    try {
+      // Debug: Log SendGrid configuration
+      console.log('SendGrid config:', {
+        hasApiKey: !!process.env.SENDGRID_API_KEY,
+        apiKeyLength: process.env.SENDGRID_API_KEY?.length,
+        from: process.env.CONTACT_FROM || 'theprojectcharis@gmail.com',
+        to: process.env.CONTACT_TO || 'theprojectcharis@gmail.com',
       });
 
-        } catch (emailError) {
-          console.error('Email sending error:', emailError);
-          console.error('SendGrid response:', emailError.response?.body);
-          return NextResponse.json(
-            { 
-              ok: false, 
-              message: 'Failed to send message. Please try again later.' 
-            },
-            { status: 500 }
-          );
-        }
+      const msg = {
+        to: process.env.CONTACT_TO || 'theprojectcharis@gmail.com',
+        from: {
+          email: process.env.CONTACT_FROM || 'noreply@projectcharis.org',
+          name: 'Project Charis',
+        },
+        subject: `New Contact — Project Charis (${data.name})`,
+        html: generateContactEmailHTML(data, timestamp, ip),
+        text: ContactEmailText({ data, timestamp, ipAddress: ip }),
+      };
 
+      const info = await sgMail.send(msg);
+
+      // Log minimal metadata (not full payload in production)
+      console.log('Contact form submitted:', {
+        timestamp: new Date().toISOString(),
+        name: data.name,
+        email: data.email,
+        organization: data.organization || 'Not provided',
+        involvementCount: data.involvement.length,
+        challenge: data.challenge,
+        messageId: info[0]?.headers?.['x-message-id'] || 'sent',
+      });
+
+      return NextResponse.json({
+        ok: true,
+        message: 'Form submitted successfully',
+      });
+    } catch (emailError) {
+      console.error('Email sending error:', emailError);
+      console.error('SendGrid response:', emailError.response?.body);
+      return NextResponse.json(
+        {
+          ok: false,
+          message: 'Failed to send message. Please try again later.',
+        },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     console.error('Contact form error:', error);
     return NextResponse.json(
-      { 
-        ok: false, 
-        message: 'Internal server error' 
+      {
+        ok: false,
+        message: 'Internal server error',
       },
       { status: 500 }
     );

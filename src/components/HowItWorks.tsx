@@ -16,27 +16,32 @@ const STEPS: StepData[] = [
     number: 1,
     icon: '💫',
     headline: 'Connect',
-    description: 'Join the Charis Network to discover nonprofits, volunteers, and resources aligned with your mission.',
+    description:
+      'Join the Charis Network to discover nonprofits, volunteers, and resources aligned with your mission.',
   },
   {
     id: 'collaborate',
     number: 2,
     icon: '🤝',
     headline: 'Collaborate',
-    description: 'Share tools, data, and insights across organizations to reduce duplicate costs and expand reach.',
+    description:
+      'Share tools, data, and insights across organizations to reduce duplicate costs and expand reach.',
   },
   {
     id: 'multiply',
     number: 3,
     icon: '🌱',
     headline: 'Multiply Impact',
-    description: 'Measure progress together and strengthen communities through collective action.',
+    description:
+      'Measure progress together and strengthen communities through collective action.',
   },
 ];
 
 export default function HowItWorks() {
   const [isVisible, setIsVisible] = useState(false);
-  const [animatedSteps, setAnimatedSteps] = useState<{ [key: string]: boolean }>({});
+  const [animatedSteps, setAnimatedSteps] = useState<{
+    [key: string]: boolean;
+  }>({});
   const sectionRef = useRef<HTMLElement>(null);
 
   // Intersection Observer for triggering animations
@@ -61,12 +66,14 @@ export default function HowItWorks() {
   useEffect(() => {
     if (!isVisible) return;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
     if (prefersReducedMotion) {
       // Show all steps immediately
       const allSteps: { [key: string]: boolean } = {};
-      STEPS.forEach(step => {
+      STEPS.forEach((step) => {
         allSteps[step.id] = true;
       });
       setAnimatedSteps(allSteps);
@@ -74,7 +81,7 @@ export default function HowItWorks() {
       // Animate steps with staggered delay
       STEPS.forEach((step, index) => {
         setTimeout(() => {
-          setAnimatedSteps(prev => ({
+          setAnimatedSteps((prev) => ({
             ...prev,
             [step.id]: true,
           }));
@@ -84,28 +91,29 @@ export default function HowItWorks() {
   }, [isVisible]);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="py-24 relative overflow-hidden"
       aria-labelledby="how-it-works-heading"
     >
       {/* Background with navy gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#223A5E] via-[#1e2f47] to-[#223A5E]"></div>
-      
+
       {/* Soft gold halo behind icons */}
       <div className="absolute top-1/2 left-1/2 w-96 h-96 -translate-x-1/2 -translate-y-1/2 bg-[#E4C9A1]/10 rounded-full blur-3xl"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 
+          <h2
             id="how-it-works-heading"
             className="text-4xl md:text-5xl font-heading text-white mb-4"
           >
             How It Works
           </h2>
           <p className="text-lg md:text-xl font-body text-slate-200 max-w-3xl mx-auto">
-            From connection to collective impact — here&apos;s how Project Charis empowers nonprofits.
+            From connection to collective impact — here&apos;s how Project
+            Charis empowers nonprofits.
           </p>
         </div>
 
@@ -113,14 +121,18 @@ export default function HowItWorks() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
             {STEPS.map((step, index) => (
-              <div key={step.id} className="flex flex-col items-center text-center relative">
+              <div
+                key={step.id}
+                className="flex flex-col items-center text-center relative"
+              >
                 {/* Step Content */}
-                <div 
+                <div
                   className={`
                     transition-all duration-700 ease-out flex flex-col items-center text-center
-                    ${animatedSteps[step.id] 
-                      ? 'opacity-100 translate-y-0' 
-                      : 'opacity-0 translate-y-8'
+                    ${
+                      animatedSteps[step.id]
+                        ? 'opacity-100 translate-y-0'
+                        : 'opacity-0 translate-y-8'
                     }
                   `}
                 >
@@ -128,12 +140,15 @@ export default function HowItWorks() {
                   <div className="relative mb-6 flex justify-center">
                     {/* Ripple outline rings */}
                     <div className="absolute inset-0 w-24 h-24 rounded-full border border-slate-300/40 animate-pulse"></div>
-                    <div className="absolute inset-2 w-20 h-20 rounded-full border border-slate-200/60 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                    
+                    <div
+                      className="absolute inset-2 w-20 h-20 rounded-full border border-slate-200/60 animate-pulse"
+                      style={{ animationDelay: '0.5s' }}
+                    ></div>
+
                     {/* Main icon container */}
                     <div className="relative w-24 h-24 rounded-full bg-white shadow-lg flex items-center justify-center border border-slate-200">
                       <span className="text-3xl">{step.icon}</span>
-                      
+
                       {/* Step number badge */}
                       <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-[#E4C9A1] text-[#223A5E] text-sm font-heading font-semibold flex items-center justify-center shadow-md">
                         {step.number}
@@ -167,7 +182,6 @@ export default function HowItWorks() {
             <div className="w-0.5 h-16 bg-gradient-to-b from-[#E4C9A1] via-[#E2EBF3] to-transparent rounded-full"></div>
           </div>
         </div>
-
       </div>
     </section>
   );

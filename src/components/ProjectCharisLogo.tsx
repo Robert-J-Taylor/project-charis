@@ -75,7 +75,9 @@ const ProjectCharisLogo: React.FC<ProjectCharisLogoProps> = ({
   return (
     <div className={`flex flex-col items-center ${className}`}>
       {/* Logo Image */}
-      <div className={`${sizeClasses[size]} flex items-center justify-center mb-2`}>
+      <div
+        className={`${sizeClasses[size]} flex items-center justify-center mb-2`}
+      >
         <Image
           src="/logo.png"
           alt="Project Charis Logo"

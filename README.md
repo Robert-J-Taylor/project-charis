@@ -7,6 +7,7 @@ Project Charis is a comprehensive platform designed to empower nonprofits by pro
 ## 🌟 **Features**
 
 ### **Current Implementation**
+
 - **Responsive Homepage** with hero section, mission statement, and product showcase
 - **Interactive Problem/Solution Slider** with 6 key challenges nonprofits face
 - **Stats Panorama** with animated count-ups and key statistics
@@ -16,6 +17,7 @@ Project Charis is a comprehensive platform designed to empower nonprofits by pro
 - **Mobile-First Design** with accessibility features
 
 ### **Future Products**
+
 - **Website-as-a-Service** - Launch modern, optimized sites for nonprofits
 - **Donation & CRM Integrations** - Manage donations and donors in one place
 - **Volunteer Management Hub** - Track hours, match skills, schedule shifts
@@ -36,29 +38,34 @@ Project Charis is a comprehensive platform designed to empower nonprofits by pro
 ## 🚀 **Getting Started**
 
 ### **Prerequisites**
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 - Git (for development)
 
 ### **Installation**
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/project-charis.git
    cd project-charis
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
+
    ```bash
    cp .env.example .env.local
    ```
-   
+
    Fill in your environment variables:
+
    ```env
    # SendGrid Configuration
    SENDGRID_API_KEY=your_sendgrid_api_key_here
@@ -67,6 +74,7 @@ Project Charis is a comprehensive platform designed to empower nonprofits by pro
    ```
 
 4. **Run the development server**
+
    ```bash
    npm run dev
    ```
@@ -77,13 +85,16 @@ Project Charis is a comprehensive platform designed to empower nonprofits by pro
 ## 📧 **Email Setup**
 
 ### **SendGrid Configuration**
+
 1. Create a SendGrid account at [sendgrid.com](https://sendgrid.com)
 2. Generate an API key with "Mail Send: Full Access"
 3. Verify your sender email address
 4. Add your API key to `.env.local`
 
 ### **Domain Authentication (Recommended)**
+
 For better email deliverability:
+
 1. Set up domain authentication in SendGrid
 2. Add SPF, DKIM, and DMARC records to your domain
 3. Use custom domain emails (e.g., `noreply@projectcharis.org`)
@@ -93,6 +104,7 @@ See `EMAIL_DELIVERABILITY_GUIDE.md` for detailed instructions.
 ## 🎨 **Design System**
 
 ### **Color Palette**
+
 - **Deep Navy**: `#223A5E` (headings, primary text)
 - **Soft Gold**: `#E4C9A1` (buttons, accents)
 - **Mist Blue**: `#718B9E` (secondary text)
@@ -100,10 +112,12 @@ See `EMAIL_DELIVERABILITY_GUIDE.md` for detailed instructions.
 - **Lines/Ripples**: `#D5E1EC` / `#E2EBF3` (borders, outlines)
 
 ### **Typography**
+
 - **Headings**: Montserrat (font-heading)
 - **Body Text**: Inter (font-body)
 
 ### **Visual Motifs**
+
 - Subtle ripple rings and outlines
 - Rounded corners and soft shadows
 - Gradient backgrounds
@@ -119,6 +133,7 @@ See `EMAIL_DELIVERABILITY_GUIDE.md` for detailed instructions.
 ## 🔧 **Development**
 
 ### **Available Scripts**
+
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run start` - Start production server
@@ -126,6 +141,7 @@ See `EMAIL_DELIVERABILITY_GUIDE.md` for detailed instructions.
 - `npm run type-check` - Run TypeScript checks
 
 ### **Project Structure**
+
 ```
 src/
 ├── app/                    # Next.js App Router
@@ -153,11 +169,13 @@ src/
 ## 🚀 **Deployment**
 
 ### **Vercel (Recommended)**
+
 1. Connect your GitHub repository to Vercel
 2. Add environment variables in Vercel dashboard
 3. Deploy automatically on push to main branch
 
 ### **Other Platforms**
+
 - **Netlify**: Connect GitHub repo, add build command `npm run build`
 - **Railway**: Connect GitHub repo, add environment variables
 - **DigitalOcean App Platform**: Connect GitHub repo, configure build settings

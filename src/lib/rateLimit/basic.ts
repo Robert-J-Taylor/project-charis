@@ -11,7 +11,11 @@ const rateLimitStore = new Map<string, RateLimitEntry>();
 const RATE_LIMIT_WINDOW = 10 * 60 * 1000; // 10 minutes in milliseconds
 const RATE_LIMIT_MAX_REQUESTS = 5; // Max 5 submissions per 10 minutes
 
-export function checkRateLimit(ip: string): { allowed: boolean; remaining: number; resetTime: number } {
+export function checkRateLimit(ip: string): {
+  allowed: boolean;
+  remaining: number;
+  resetTime: number;
+} {
   const now = Date.now();
   const entry = rateLimitStore.get(ip);
 
@@ -19,12 +23,12 @@ export function checkRateLimit(ip: string): { allowed: boolean; remaining: numbe
     // First request from this IP
     rateLimitStore.set(ip, {
       count: 1,
-      resetTime: now + RATE_LIMIT_WINDOW
+      resetTime: now + RATE_LIMIT_WINDOW,
     });
     return {
       allowed: true,
       remaining: RATE_LIMIT_MAX_REQUESTS - 1,
-      resetTime: now + RATE_LIMIT_WINDOW
+      resetTime: now + RATE_LIMIT_WINDOW,
     };
   }
 
@@ -32,12 +36,12 @@ export function checkRateLimit(ip: string): { allowed: boolean; remaining: numbe
     // Window has expired, reset
     rateLimitStore.set(ip, {
       count: 1,
-      resetTime: now + RATE_LIMIT_WINDOW
+      resetTime: now + RATE_LIMIT_WINDOW,
     });
     return {
       allowed: true,
       remaining: RATE_LIMIT_MAX_REQUESTS - 1,
-      resetTime: now + RATE_LIMIT_WINDOW
+      resetTime: now + RATE_LIMIT_WINDOW,
     };
   }
 
@@ -46,7 +50,7 @@ export function checkRateLimit(ip: string): { allowed: boolean; remaining: numbe
     return {
       allowed: false,
       remaining: 0,
-      resetTime: entry.resetTime
+      resetTime: entry.resetTime,
     };
   }
 
@@ -57,7 +61,7 @@ export function checkRateLimit(ip: string): { allowed: boolean; remaining: numbe
   return {
     allowed: true,
     remaining: RATE_LIMIT_MAX_REQUESTS - entry.count,
-    resetTime: entry.resetTime
+    resetTime: entry.resetTime,
   };
 }
 

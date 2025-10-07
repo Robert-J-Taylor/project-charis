@@ -21,8 +21,8 @@ interface ContactFormData {
 const INVOLVEMENT_OPTIONS = [
   'I represent a nonprofit or community organization',
   'I want to volunteer or collaborate',
-  'I\'m exploring partnerships or funding',
-  'I just want to learn more'
+  "I'm exploring partnerships or funding",
+  'I just want to learn more',
 ];
 
 const CHALLENGE_OPTIONS = [
@@ -30,27 +30,27 @@ const CHALLENGE_OPTIONS = [
   'Attracting volunteers or donors',
   'Building a better online presence',
   'Coordinating with other nonprofits',
-  'Other'
+  'Other',
 ];
 
 export default function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
     reset,
-    setError
+    setError,
   } = useForm<ContactFormData>();
 
   const selectedChallenge = watch('challenge');
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
-    
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -71,7 +71,7 @@ export default function ContactForm() {
           Object.keys(result.errors).forEach((field) => {
             setError(field as keyof ContactFormData, {
               type: 'manual',
-              message: result.errors[field][0]
+              message: result.errors[field][0],
             });
           });
         } else {
@@ -112,10 +112,13 @@ export default function ContactForm() {
       {/* Your Info Section */}
       <div className="space-y-6">
         <h2 className="text-2xl font-heading text-[#223A5E] mb-6">Your Info</h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-[#223A5E] mb-2">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-[#223A5E] mb-2"
+            >
               Name *
             </label>
             <input
@@ -131,16 +134,19 @@ export default function ContactForm() {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-[#223A5E] mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-[#223A5E] mb-2"
+            >
               Email *
             </label>
             <input
-              {...register('email', { 
+              {...register('email', {
                 required: 'Email is required',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address'
-                }
+                  message: 'Invalid email address',
+                },
               })}
               type="email"
               id="email"
@@ -148,13 +154,18 @@ export default function ContactForm() {
               placeholder="your@email.com"
             />
             {errors.email && (
-              <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+              <p className="mt-1 text-sm text-red-600">
+                {errors.email.message}
+              </p>
             )}
           </div>
         </div>
 
         <div>
-          <label htmlFor="organization" className="block text-sm font-medium text-[#223A5E] mb-2">
+          <label
+            htmlFor="organization"
+            className="block text-sm font-medium text-[#223A5E] mb-2"
+          >
             Organization
           </label>
           <input
@@ -172,12 +183,17 @@ export default function ContactForm() {
         <h2 className="text-2xl font-heading text-[#223A5E] mb-6">
           How are you looking to get involved?
         </h2>
-        
+
         <div className="space-y-4">
           {INVOLVEMENT_OPTIONS.map((option, index) => (
-            <label key={index} className="flex items-start space-x-3 cursor-pointer">
+            <label
+              key={index}
+              className="flex items-start space-x-3 cursor-pointer"
+            >
               <input
-                {...register('involvement', { required: 'Please select at least one option' })}
+                {...register('involvement', {
+                  required: 'Please select at least one option',
+                })}
                 type="checkbox"
                 value={option}
                 className="mt-1 h-4 w-4 text-[#E4C9A1] border-[#E2EBF3] rounded focus:ring-[#E4C9A1]"
@@ -196,10 +212,12 @@ export default function ContactForm() {
         <h2 className="text-2xl font-heading text-[#223A5E] mb-6">
           What&apos;s your biggest challenge right now?
         </h2>
-        
+
         <div>
           <select
-            {...register('challenge', { required: 'Please select a challenge' })}
+            {...register('challenge', {
+              required: 'Please select a challenge',
+            })}
             className="w-full px-4 py-3 border border-[#E2EBF3] rounded-lg focus:ring-2 focus:ring-[#E4C9A1] focus:border-transparent transition-all duration-200"
           >
             <option value="">Select your biggest challenge</option>
@@ -210,18 +228,26 @@ export default function ContactForm() {
             ))}
           </select>
           {errors.challenge && (
-            <p className="mt-1 text-sm text-red-600">{errors.challenge.message}</p>
+            <p className="mt-1 text-sm text-red-600">
+              {errors.challenge.message}
+            </p>
           )}
         </div>
 
         {selectedChallenge === 'Other' && (
           <div>
-            <label htmlFor="otherChallenge" className="block text-sm font-medium text-[#223A5E] mb-2">
+            <label
+              htmlFor="otherChallenge"
+              className="block text-sm font-medium text-[#223A5E] mb-2"
+            >
               Please tell us more
             </label>
             <input
-              {...register('otherChallenge', { 
-                required: selectedChallenge === 'Other' ? 'Please describe your challenge' : false 
+              {...register('otherChallenge', {
+                required:
+                  selectedChallenge === 'Other'
+                    ? 'Please describe your challenge'
+                    : false,
               })}
               type="text"
               id="otherChallenge"
@@ -229,7 +255,9 @@ export default function ContactForm() {
               placeholder="Describe your specific challenge"
             />
             {errors.otherChallenge && (
-              <p className="mt-1 text-sm text-red-600">{errors.otherChallenge.message}</p>
+              <p className="mt-1 text-sm text-red-600">
+                {errors.otherChallenge.message}
+              </p>
             )}
           </div>
         )}
@@ -240,17 +268,21 @@ export default function ContactForm() {
         <h2 className="text-2xl font-heading text-[#223A5E] mb-6">
           How can we help you most?
         </h2>
-        
+
         <div>
           <textarea
-            {...register('helpText', { required: 'Please tell us how we can help' })}
+            {...register('helpText', {
+              required: 'Please tell us how we can help',
+            })}
             id="helpText"
             rows={4}
             className="w-full px-4 py-3 border border-[#E2EBF3] rounded-lg focus:ring-2 focus:ring-[#E4C9A1] focus:border-transparent transition-all duration-200"
             placeholder="Tell us about your goals and how Project Charis might support you..."
           />
           {errors.helpText && (
-            <p className="mt-1 text-sm text-red-600">{errors.helpText.message}</p>
+            <p className="mt-1 text-sm text-red-600">
+              {errors.helpText.message}
+            </p>
           )}
         </div>
       </div>
@@ -260,7 +292,7 @@ export default function ContactForm() {
         <h2 className="text-2xl font-heading text-[#223A5E] mb-6">
           Anything else you&apos;d like to share?
         </h2>
-        
+
         <div>
           <textarea
             {...register('extra')}
@@ -277,7 +309,7 @@ export default function ContactForm() {
         <h2 className="text-2xl font-heading text-[#223A5E] mb-6">
           Stay Connected
         </h2>
-        
+
         <div className="space-y-4">
           <label className="flex items-start space-x-3 cursor-pointer">
             <input

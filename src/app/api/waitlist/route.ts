@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
         ok: true,
         message: 'Successfully joined waitlist',
       });
-    } catch (emailError: any) {
+    } catch (emailError: unknown) {
       console.error('Waitlist email error:', emailError);
       return NextResponse.json(
         {

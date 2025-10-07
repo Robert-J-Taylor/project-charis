@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import ProjectCharisLogo from '@/components/ProjectCharisLogo';
 
 const NAVIGATION_LINKS = [
@@ -19,27 +20,27 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="/" className="block">
+            <Link href="/" className="block">
               <ProjectCharisLogo size="lg" variant="light" showText={false} />
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             {NAVIGATION_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.name}
                 href={link.href}
                 className="text-[#718B9E] hover:text-[#223A5E] font-body font-medium transition-colors duration-200"
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </nav>
 
           {/* Desktop CTA Button */}
           <div className="hidden lg:flex items-center">
-            <a
+            <Link
               href="/contact"
               className="
                 bg-[#E4C9A1] text-[#223A5E] hover:bg-[#E4C9A1]/90
@@ -48,7 +49,7 @@ export default function Header() {
               "
             >
               Join Network
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -87,17 +88,17 @@ export default function Header() {
           <div className="lg:hidden border-t border-[#E2EBF3] bg-white/95 backdrop-blur-sm">
             <div className="px-4 py-6 space-y-4">
               {NAVIGATION_LINKS.map((link) => (
-                <a
+                <Link
                   key={link.name}
                   href={link.href}
                   className="block text-[#718B9E] hover:text-[#223A5E] font-body font-medium py-2 transition-colors duration-200"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
               <div className="pt-4 border-t border-[#E2EBF3]">
-                <a
+                <Link
                   href="/contact"
                   className="
                     block w-full text-center
@@ -108,7 +109,7 @@ export default function Header() {
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Join Network
-                </a>
+                </Link>
               </div>
             </div>
           </div>

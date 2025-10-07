@@ -1,4 +1,3 @@
-import React from 'react';
 import { ContactFormData } from '@/lib/validation/contact';
 
 interface ContactEmailProps {
@@ -9,11 +8,7 @@ interface ContactEmailProps {
 
 // This function is no longer used since we're using the HTML template in route.ts
 // Keeping this file for the plain text version only
-export function ContactEmail({
-  data,
-  timestamp,
-  ipAddress,
-}: ContactEmailProps) {
+export function ContactEmail() {
   // This is a placeholder - the actual HTML email is generated in route.ts
   return null;
 }

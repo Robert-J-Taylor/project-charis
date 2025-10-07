@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface SlideData {
   image: string;
@@ -83,10 +84,11 @@ export default function ProblemSlider({ slides }: ProblemSliderProps) {
                           <div className="order-1 lg:order-1">
                             <div className="relative">
                               <div className="w-full h-96 lg:h-[28rem] rounded-2xl overflow-hidden">
-                                <img
+                                <Image
                                   src={slide.image}
                                   alt={slide.imageAlt}
-                                  className="w-full h-full object-cover object-center"
+                                  fill
+                                  className="object-cover object-center"
                                 />
                               </div>
                             </div>
